@@ -27,6 +27,9 @@ export default {
   props: {
     msg: String
   },
+  created() {
+    document.title = 'Poisoned Summer 6';
+  },
   data() {
     return {
         data: null
