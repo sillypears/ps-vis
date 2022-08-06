@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ps6data from "../data/ps6.json"
+import axios from 'axios'; 
 
 export default {
   name: 'MainPage',
@@ -18,8 +18,13 @@ export default {
   },
   data() {
     return {
-        data: ps6data
+        data: null
     }
+  },
+  mounted() {
+    axios
+        .get('https://raw.githubusercontent.com/sillypears/ps6-stuff/main/ps6.json')
+        .then(response => (this.data = response.data))
   }
 }
 </script>

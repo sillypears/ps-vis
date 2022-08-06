@@ -9,6 +9,7 @@
     "push": "git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.8.3",
     "moment": "^2.29.4",
