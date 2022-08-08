@@ -20,6 +20,7 @@ export default {
 
 #app {
   font-family: 'Bebas Neue', sans-serif;
+  font-size: larger;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
