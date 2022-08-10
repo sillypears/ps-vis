@@ -4,7 +4,7 @@
     <b-navbar id="navbar" type="dark" variant="dark">
       <b-navbar-brand href="#"><img src="./assets/etf-dark.png" height="40px" /></b-navbar-brand>
       <b-navbar-nav>
-        <b-nav-item href="#" target="_blank">
+        <b-nav-item href="https://www.instagram.com/p/BZUlaw0g1vr/" target="_blank">
           PS1
         </b-nav-item>
         <b-nav-item href="#" target="_blank">
