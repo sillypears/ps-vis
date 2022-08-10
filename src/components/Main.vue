@@ -1,6 +1,6 @@
 <template>
     <b-container fluid class="bv-example-row">
-        <header class="header h1 my-5">
+        <header class="header h1 mt-2 mb-5">
             <b-link style="color:black; text-decoration: none;" href="https://instagram.com/nightcaps.keycaps" target="_blank">
                 Nightcaps
             </b-link>
