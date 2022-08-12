@@ -58,7 +58,14 @@
                         </div>
                     </b-card-body>
                     <b-card-footer >
-                        <a class="" :href="day[0].link" target="_blank"><img src="../assets/ig.png" height="24px"></a>
+                        <b-row>
+                            <b-col class="col-md-2">
+                                <img v-if="day[0].goldbag" src="../assets/goldbag.png" height="24px" />
+                            </b-col>
+                            <b-col class="col-md-10 text-right">
+                                <a class="" :href="day[0].link" target="_blank"><img src="../assets/ig.png" height="24px"></a>
+                            </b-col>
+                        </b-row>
                     </b-card-footer>
                 </b-card>
             </b-card-group>
