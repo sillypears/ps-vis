@@ -26,6 +26,7 @@
                     <b-card-header
                         header-bg-variant="primary"
                         header-text-variant="white"
+                        :title="day[0].date_day"
                     >
                         Day {{ key }}
                     </b-card-header>
