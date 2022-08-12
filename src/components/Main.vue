@@ -60,10 +60,10 @@
                     <b-card-footer >
                         <b-row>
                             <b-col class="col-md-2">
-                                <img v-if="day[0].goldbag" src="../assets/goldbag.png" height="24px" />
+                                <img v-if="day[0].goldbag" title="Goldbags are back :o" alt="Goldbags are back :o" src="../assets/goldbag.png" height="24px" />
                             </b-col>
                             <b-col class="col-md-10 text-right">
-                                <a class="" :href="day[0].link" target="_blank"><img src="../assets/ig.png" height="24px"></a>
+                                <a class="" :href="day[0].link" target="_blank"><img title="Instagram post" alt="Link to post on Instagram" src="../assets/ig.png" height="24px"></a>
                             </b-col>
                         </b-row>
                     </b-card-footer>
