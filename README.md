@@ -1,4 +1,4 @@
-# ps6-stats
+# Poisoned Summer Stats & Stuff
 
 ## Project setup
 ```
