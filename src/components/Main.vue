@@ -12,7 +12,7 @@
                 md="3"
                 sm="4"
                 v-for="(day, key) in calData" 
-                :key="'day' + key"
+                :key="'day-' + key "
             >
             <b-card-group 
                 deck
@@ -26,7 +26,7 @@
                     <b-card-header
                         header-bg-variant="primary"
                         header-text-variant="white"
-                        :title="day[0].date_day"
+                        :title="day['sculpts'][0].date_day"
                     >
                         Day {{ key }}
                     </b-card-header>
@@ -34,25 +34,27 @@
                         <div class="text-left">
                             Entry:
                         </div>
-                        <div class="text-right" v-if="day[0].entry_time < 12">
-                            {{ day[0].entry_time }}AM PST
+                        <div class="text-right" v-if="day['sculpts'][0].entry_time < 12">
+                            {{ day['sculpts'][0].entry_time }}AM PST
                         </div>
                         <div class="text-right" v-else>
-                            {{ day[0].entry_time - 12}}PM PST
+                            {{ day['sculpts'][0].entry_time - 12}}PM PST
                         </div>
                         <div class="text-right" >
-                            {{ day[0].entry_window}} {{day[0].entry_unit}}<span v-if="day[0].entry_window != 1">s</span>
+                            {{ day['sculpts'][0].entry_window}} {{day['sculpts'][0].entry_unit}}<span v-if="day['sculpts'][0].entry_window != 1">s</span>
                         </div>
                         <div class="text-left">
                             Colorway:
                         </div>
-                        <div class="text-right">
-                            {{ day[0].colorway }}
+                        <div v-for="(c,i) in day['colorways']" :key="i + '-' + day['sculpts'][0].day + '-' + c">
+                            <div class="text-right">
+                                {{ c }}
+                            </div>
                         </div>
                         <div class="text-left">
                             Sculpts:
                         </div>
-                        <div v-for="s in day" :key="s.sculpt+s.day">
+                        <div v-for="(s,i) in day['sculpts']" :key="i + '-'+ s.day + '-' + s.sculpt + '-' + s.colorway">
                             <div class="text-right">
                                 {{ s.sculpt }} - {{ s.quantity }}
                             </div>
@@ -61,10 +63,10 @@
                     <b-card-footer >
                         <b-row>
                             <b-col class="col-md-2">
-                                <img v-if="day[0].goldbag" title="Goldbags are back :o" alt="Goldbags are back :o" src="../assets/goldbag.png" height="24px" />
+                                <img v-if="day['sculpts'][0].goldbag" title="Goldbags are back :o" alt="Goldbags are back :o" src="../assets/goldbag.png" height="24px" />
                             </b-col>
                             <b-col class="col-md-10 text-right">
-                                <a class="" :href="day[0].link" target="_blank"><img title="Instagram post" alt="Link to post on Instagram" src="../assets/ig.png" height="24px"></a>
+                                <a class="" :href="day['sculpts'][0].link" target="_blank"><img title="Instagram post" alt="Link to post on Instagram" src="../assets/ig.png" height="24px"></a>
                             </b-col>
                         </b-row>
                     </b-card-footer>
@@ -72,7 +74,7 @@
             </b-card-group>
             </b-col>
         </b-row>
-        <Bar
+        <!-- <Bar
             :chart-options="chartOptions"
             :chart-data="chartData"
             :chart-id="chartId"
@@ -83,16 +85,16 @@
             :width="width"
             :height="height"
             v-if="loaded"
-        />
+        /> -->
     </b-container>
 </template>
 
 <script>
 import axios from 'axios'; 
-import { Bar } from 'vue-chartjs';
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+// import { Bar } from 'vue-chartjs';
+// import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+// ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 export default {
   name: 'MainPage',
@@ -127,7 +129,7 @@ export default {
       default: () => {}
     }
   },
-  components: { Bar },
+//   components: { Bar },
   created() {
     document.title = 'Poisoned Summer';
   },
@@ -142,35 +144,40 @@ export default {
         loaded: false,
     }
   },
-  mounted() {
+  async mounted() {
     let c_data = {};
-    let s_data = {};
+    // let s_data = {};
     this.loaded = false;
     axios
         .get('https://raw.githubusercontent.com/sillypears/ps6-stuff/main/ps6.json')
         .then(response => {
             for (let d of response.data) {
                 if (Object.keys(c_data).indexOf(`${d.day}`) >= 0) {
-                    c_data[`${d.day}`].push(d);
+                    if ( c_data[`${d.day}`]['colorways'].indexOf(d.colorway)) {
+                         c_data[`${d.day}`]['colorways'].push(d.colorway)
+                    }
+                    c_data[`${d.day}`]['sculpts'].push(d);
                 } else {
-                    c_data[`${d.day}`] = [d];
+                    c_data[`${d.day}`] = {
+                        'colorways': [d.colorway],
+                        'sculpts': [d]};
                 }
             }
-            for (let d in c_data) {
-                if (Object.keys(s_data).indexOf(`${c_data[d][0].entry_time}`) >= 0) {
-                    s_data[`${c_data[d][0].entry_time}`] += 1;
-                } else {
-                    s_data[`${c_data[d][0].entry_time}`] = 1;
-                } 
+            // for (let d in c_data) {
+            //     if (Object.keys(s_data).indexOf(`${c_data[d][0].entry_time}`) >= 0) {
+            //         s_data[`${c_data[d][0].entry_time}`] += 1;
+            //     } else {
+            //         s_data[`${c_data[d][0].entry_time}`] = 1;
+            //     } 
                 
-            }
+            // }
             this.calData = c_data;
-            this.chartData.labels = []
-            this.chartData.datasets = {data:[]};
-            for (let d in s_data) {
-                this.chartData.labels.push(d)
-                this.chartData.datasets.data.push(s_data[d]);
-            }
+            // this.chartData.labels = []
+            // this.chartData.datasets = {data:[]};
+            // for (let d in s_data) {
+            //     this.chartData.labels.push(d)
+            //     this.chartData.datasets.data.push(s_data[d]);
+            // }
             this.data = response.data;
             this.loaded = true;
         })
