@@ -27,6 +27,11 @@
     <div id="app">
       <MainPage />
     </div>
+    <footer class="footer text-right">
+      <a class="text-right" href="https://github.com/sillypears/ps-vis/" target="_blank" title="Hello Github" alt="Link to github repo">
+        <img src="./assets/octocat.png" height="40px" />
+      </a>
+    </footer>
   </div>
 </template>
 
