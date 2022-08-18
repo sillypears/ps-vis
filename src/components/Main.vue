@@ -42,7 +42,7 @@
                         <div class="text-right" v-else>
                             {{ calData[day]['sculpts'][0].entry_time - 12}}PM PST
                         </div>
-                        <div class="text-right" :alt="`This cap costs $${calData[day]['sculpts'][0].price}`" :title="`$${calData[day]['sculpts'][0].price}`">
+                        <div class="text-right" :alt="`This cap costs $${calData[day]['sculpts'][0].price}`" >
                             {{ calData[day]['sculpts'][0].entry_window}} {{calData[day]['sculpts'][0].entry_unit}}<span v-if="calData[day]['sculpts'][0].entry_window != 1">s</span>
                         </div>
                         <div class="text-left">
@@ -57,7 +57,7 @@
                             Sculpts:
                         </div>
                         <div v-for="(s,i) in calData[day]['sculpts']" :key="i + '-'+ s.day + '-' + s.sculpt + '-' + s.colorway">
-                            <div class="text-right">
+                            <div class="text-right" :title="`$${calData[day]['sculpts'][0].price}`">
                                 {{ s.sculpt }} <span class="text-muted initialism">({{ s.quantity }})</span>
                             </div>
                         </div>
