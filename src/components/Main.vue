@@ -76,18 +76,7 @@
             </b-card-group>
             </b-col>
         </b-row>
-        <!-- <Bar
-            :chart-options="chartOptions"
-            :chart-data="chartData"
-            :chart-id="chartId"
-            :dataset-id-key="datasetIdKey"
-            :plugins="plugins"
-            :css-classes="cssClasses"
-            :styles="styles"
-            :width="width"
-            :height="height"
-            v-if="loaded"
-        /> -->
+        <datatable :columns="dtColumns" :data="dtRows"></datatable>            
     </b-container>
 </template>
 
@@ -100,43 +89,13 @@ import axios from 'axios';
 
 export default {
   name: 'MainPage',
-  props: {
-    msg: String,
-    chartId: {
-        type: String,
-        default: 'bar-chart'
-    },
-    datasetIdKey: {
-      type: String,
-      default: 'label'
-    },
-    width: {
-      type: Number,
-      default: 400
-    },
-    height: {
-      type: Number,
-      default: 400
-    },
-    cssClasses: {
-      default: '',
-      type: String
-    },
-    styles: {
-      type: Object,
-      default: () => {}
-    },
-    plugins: {
-      type: Object,
-      default: () => {}
-    }
-  },
-//   components: { Bar },
   created() {
     document.title = 'Poisoned Summer';
   },
   data() {
     return {
+        dtColumns: [],
+        dtRows: [],
         data: null,
         calData: {},
         chartData: {},
@@ -148,38 +107,30 @@ export default {
   },
   async mounted() {
     let c_data = {};
-    // let s_data = {};
     this.loaded = false;
     axios
         .get('https://raw.githubusercontent.com/sillypears/ps6-stuff/main/ps6.json')
         .then(response => {
+            let tempColumns = Object.keys(response.data[0])
+            for (let c in tempColumns) {
+                this.dtColumns.push({label: tempColumns[c], field: tempColumns[c]})
+            }
             for (let d of response.data) {
-                if (Object.keys(c_data).indexOf(`${d.day}`) >= 0) {
-                    if ( c_data[`${d.day}`]['colorways'].indexOf(d.colorway)) {
-                         c_data[`${d.day}`]['colorways'].push(d.colorway)
+                this.dtRows.push(d)
+                let lDay = d.day
+                if (Object.keys(c_data).indexOf(`${lDay}`) >= 0) {
+                    if ( c_data[`${lDay}`]['colorways'].indexOf(d.colorway)) {
+                         c_data[`${lDay}`]['colorways'].push(d.colorway)
                     }
-                    c_data[`${d.day}`]['sculpts'].push(d);
+                    c_data[`${lDay}`]['sculpts'].push(d);
                 } else {
-                    c_data[`${d.day}`] = {
+                    c_data[`${lDay}`] = {
                         'colorways': [d.colorway],
                         'sculpts': [d]};
                 }
             }
-            // for (let d in c_data) {
-            //     if (Object.keys(s_data).indexOf(`${c_data[d][0].entry_time}`) >= 0) {
-            //         s_data[`${c_data[d][0].entry_time}`] += 1;
-            //     } else {
-            //         s_data[`${c_data[d][0].entry_time}`] = 1;
-            //     } 
-                
-            // }
+
             this.calData = c_data;
-            // this.chartData.labels = []
-            // this.chartData.datasets = {data:[]};
-            // for (let d in s_data) {
-            //     this.chartData.labels.push(d)
-            //     this.chartData.datasets.data.push(s_data[d]);
-            // }
             this.data = response.data;
             this.loaded = true;
         })
