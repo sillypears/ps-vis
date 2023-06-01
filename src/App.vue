@@ -22,6 +22,12 @@
         <b-nav-item href="https://www.instagram.com/p/CfffCSbLkJ7/" target="_blank">
           PS6
         </b-nav-item>
+        <b-nav-item href="https://www.instagram.com/p/CfffCSbLkJ7/" target="_blank" disabled>
+          PS7
+        </b-nav-item>
+        <b-nav-item href="https://imgur.com/a/uB49rye" target="_blank">
+          Menus
+        </b-nav-item>
       </b-navbar-nav>
     </b-navbar>
     <div id="app">
