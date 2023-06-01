@@ -22,3 +22,10 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Commands to remember
+
+npm run build
+git add .
+git commit 
+npm run push
