@@ -7,7 +7,7 @@
         <b-nav-item href="https://www.instagram.com/p/BZUlaw0g1vr/" target="_blank">
           PS1
         </b-nav-item>
-        <b-nav-item href="#" target="_blank">
+        <b-nav-item href="https://imgur.com/a/2OC9aU1" target="_blank">
           PS2
         </b-nav-item>
         <b-nav-item href="https://www.instagram.com/p/B0By3RwnSKm/" target="_blank">
